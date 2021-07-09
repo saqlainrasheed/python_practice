@@ -45,43 +45,47 @@ def db_create_table(connection):
 def insert_into_users(connection,users):
   cursor = connection.cursor()
   for user in users:
-    cursor.execute("INSERT INTO users (\
-        id, name, username, email, phone, website\
-      ) VALUES (?,?,?,?,?,?)",[
+    users_details = [
         user['id'],
         user['name'],
         user['username'],
         user['email'],
         user['phone'],
         user['website']
-      ])
+      ]
+    cursor.execute("INSERT INTO users (\
+        id, name, username, email, phone, website\
+      ) VALUES (?,?,?,?,?,?)",users_details)
   connection.commit()
 
 
 def insert_into_posts(connection,posts):
   cursor = connection.cursor()
   for post in posts:
-    cursor.execute(f"INSERT INTO posts (\
-        id, user_id, title, body\
-      ) VALUES (?,?,?,?) ",[
+    post_details = [
         post['id'],
         post['userId'],
         post['title'],
         post['body']
-      ])
+      ]
+    cursor.execute(f"INSERT INTO posts (\
+        id, user_id, title, body\
+      ) VALUES (?,?,?,?) ",post_details)
   connection.commit()
+
 
 def insert_into_comments(connection,comments):
   cursor = connection.cursor()
   for comment in comments:
-    cursor.execute(f"INSERT INTO comments (\
-        id, post_id, name, email, body\
-      ) VALUES (?,?,?,?,?)",[
+    comment_details = [
         comment['id'],
         comment['postId'],
         comment['name'],
         comment['email'],
         comment['body']
-      ])
+      ]
+    cursor.execute(f"INSERT INTO comments (\
+        id, post_id, name, email, body\
+      ) VALUES (?,?,?,?,?)",comment_details)
   connection.commit()
   
