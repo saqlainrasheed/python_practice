@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 blog.db
 data.json
+=======
+./blog.db
+./data.json
+./merge_data_together/__pycache__
+>>>>>>> e90c62f26ab2f88aad4794873bf0145083050f6e
