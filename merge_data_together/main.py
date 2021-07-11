@@ -1,24 +1,24 @@
 import json
 import db
 import fetch
-import merge
+from merge import merge
+from urls import USERS_URL, POSTS_URL, COMMENTS_URL
 
 
 def main():
-  users = fetch.fetch_users()
-  posts = fetch.fetch_posts()
-  comments = fetch.fetch_comments()
-  post_comments = merge.add_comments_in_posts(posts, comments)
-  data = merge.add_posts_in_users(users, post_comments)
+    users = fetch.get(USERS_URL)
+    posts = fetch.get(POSTS_URL)
+    comments = fetch.get(COMMENTS_URL)
+    data = merge(users, posts, comments)
 
-  with open("data.json", "w") as output_file:
-    json.dump(data, output_file)
+    with open('data.json', 'w') as output_file:
+        json.dump(data, output_file)
 
-  connection = db.db_connection()
-  db.create_table(connection)
-  db.insert_user(connection, users)
-  db.insert_post(connection, posts)
-  db.insert_comment(connection, comments)
+    connection = db.db_connection()
+    db.create_table(connection)
+    db.insert('user', users)
+    db.insert('post', posts)
+    db.insert('comment', comments)
 
 
 main()
