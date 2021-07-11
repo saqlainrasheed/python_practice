@@ -96,5 +96,5 @@ def insert(key, data):
         'comment': lambda: insert_comment(cursor, data),
     }
 
-    switch.get(key, "Error: Invalid case.")
+    switch.get(key, "Error: Invalid key.")
     connection.commit()
