@@ -3,4 +3,5 @@ import requests
 
 def get(url):
     response = requests.get(url)
-    return response.json()
+    data = response.json()
+    return data

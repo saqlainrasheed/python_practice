@@ -18,6 +18,8 @@ def create_table(connection):
         username VARCHAR(255),
         website VARCHAR(255)
         ) 
+
+        
         """
     )
 
@@ -57,19 +59,13 @@ def insert_user(cursor, users):
             ) VALUES (
                 ?, ?, ?, ?, ?, ?
             )
-              """, [
-                user['id'],
-                user['email'],
-                user['name'],
-                user['phone'],
-                user['username'],
-                user['website'],
-            ]
+            """, [user]
         )
 
 
 def insert_post(cursor, posts):
     for post in posts:
+        print(post)
         cursor.execute(
             """
             INSERT INTO post (
@@ -77,12 +73,7 @@ def insert_post(cursor, posts):
             ) VALUES (
                 ?, ?, ?, ?
             )
-              """, [
-                post['id'],
-                post['body'],
-                post['title'],
-                post['userId'],
-            ]
+            """, [post]
         )
 
 
@@ -95,13 +86,7 @@ def insert_comment(cursor, comments):
             ) VALUES (
                 ?, ?, ?, ?, ?
             )
-              """, [
-                comment['id'],
-                comment['body'],
-                comment['email'],
-                comment['name'],
-                comment['postId'],
-            ]
+            """, [comment]
         )
 
 
@@ -109,10 +94,10 @@ def insert(key, data):
     connection = db_connection()
     cursor = connection.cursor()
     switch = {
-        'user': insert_user(cursor, data),
-        'post': insert_post(cursor, data),
-        'comment': insert_comment(cursor, data),
+        'user': lambda: insert_user(cursor, data),
+        'post': lambda: insert_post(cursor, data),
+        'comment': lambda: insert_comment(cursor, data),
     }
 
-    switch.get(key)
-    cursor.commit()
+    switch.get(key, "Error: Invalid case.")
+    connection.commit()
