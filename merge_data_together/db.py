@@ -18,8 +18,6 @@ def create_table(connection):
         username VARCHAR(255),
         website VARCHAR(255)
         ) 
-
-        
         """
     )
 
@@ -65,7 +63,6 @@ def insert_user(cursor, users):
 
 def insert_post(cursor, posts):
     for post in posts:
-        print(post)
         cursor.execute(
             """
             INSERT INTO post (
